@@ -47,6 +47,7 @@ async function updateUser(/*id,*/ fields = {}) {
         throw error;
     }
 }
+console.log(3);
 
 module.exports = {
     client,
