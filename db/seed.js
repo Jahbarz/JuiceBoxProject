@@ -7,7 +7,12 @@ const {
     createPost,
     updatePost,
     getAllPosts,
-    getPostsByUser
+    getPostsByUser,
+    createTags,
+    createPostTag,
+    addTagsToPost,
+    getPostById,
+    getPostsByTagName
 } = require('./index');
 
 async function dropTables() {
@@ -86,9 +91,9 @@ async function createInitialPosts() {
         const [albert, sandra, glamgal] = await getAllUsers();
 
         console.log("Starting to create posts...");
-        await createPost({ authorId: albert.id, title: "First Post", content: "This is my first post!" });
-        await createPost({ authorId: sandra.id, title: "How does this work?", content: "???"});
-        await createPost({ authorId: glamgal.id, title: "Life in the dream house!", content: "Chillin with Barbs at her place."});
+        await createPost({ authorId: albert.id, title: "First Post", content: "This is my first post!", tags: ["#happy", "#youcandoanything"]});
+        await createPost({ authorId: sandra.id, title: "How does this work?", content: "???", tags: ["#happy","#worst-day-ever"]});
+        await createPost({ authorId: glamgal.id, title: "Life in the dream house!", content: "Chillin with Barbs at her place.", tags: ["#happy","#youcandoanything", "#catmandoeverything"]});
 
         console.log("Finished creating posts!");
     }   catch (error) {
@@ -96,6 +101,7 @@ async function createInitialPosts() {
         throw error;
     }
 }
+
 
 async function rebuildDB() {
     try {
@@ -130,12 +136,22 @@ async function testDB() {
       const posts = await getAllPosts();
       console.log("Result:", posts);
   
-      console.log("Calling updatePost on posts[0]");
+      /*console.log("Calling updatePost on posts[0]");
       const updatePostResult = await updatePost(posts[0].id, {
         title: "New Title",
         content: "Updated Content"
       });
-      console.log("Result:", updatePostResult);
+      console.log("Result:", updatePostResult);*/
+
+      console.log("Calling updatePost on post[1], only updating tags");
+      const updatePostTagsResult = await updatePost(posts[1].id, {
+        tags: ["#youcandoanything", "#redfish", "#bluefish"]
+      });
+      console.log("Result:", updatePostTagsResult);
+
+      console.log("Calling getPostsByTagName with #happy");
+      const postsWithHappy = await getPostsByTagName("#happy");
+      console.log("Result:", postsWithHappy);
   
       console.log("Calling getUserById with 1");
       const albert = await getUserById(1);
