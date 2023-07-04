@@ -147,46 +147,6 @@ async function getPostsByUser(userId) {
     }
 }
 
-async function createPost({
-    authorId,
-    title,
-    content
-  }) {
-    try {
-  
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  async function updatePost(id, fields = {}) {
-    try {
-  
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  async function getAllPosts() {
-    try {
-  
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  async function getPostsByUser(userId) {
-    try {
-      const { rows } = await client.query(`
-        SELECT * FROM posts
-        WHERE "authorId"=$1;
-      `, [userId]);
-  
-      return rows;
-    } catch (error) {
-      throw error;
-    }
-  }
 
 module.exports = {
     client,
