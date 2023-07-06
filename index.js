@@ -1,4 +1,5 @@
 const PORT = 3000;
+require('dotenv').config();
 const express = require('express');
 const server = express();
 const morgan = require('morgan');
@@ -15,3 +16,4 @@ client.connect();
 server.listen(PORT, () => {
   console.log('The server is up on port', PORT)
 });
+

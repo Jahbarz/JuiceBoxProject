@@ -1,6 +1,6 @@
 const { Client } = require('pg');
 
-const client = new Client('postgres://localhost:5432/juicebox');
+const client = new Client('postgres://localhost:5432/juicebox-dev');
 
 async function createUser({
     username,
@@ -70,6 +70,20 @@ async function getUserById(userId) {
             return null
         }
         user.posts = await getPostsByUser(userId);
+
+        return user;
+    }   catch (error) {
+        throw error;
+    }
+}
+
+async function getUserByUsername(username) {
+    try {
+        const { rows: [user] } = await client.query(`
+            SELECT *
+            FROM users
+            WHERE username=$1;
+        `, [username]);
 
         return user;
     }   catch (error) {
@@ -314,5 +328,6 @@ module.exports = {
     addTagsToPost,
     getPostById,
     getPostsByTagName,
-    getAllTags
+    getAllTags,
+    getUserByUsername
 }
