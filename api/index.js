@@ -40,13 +40,6 @@ apiRouter.use(async (req, res, next) => {
     }
 });
 
-apiRouter.use((req, res, next) => {
-    if (req.user) {
-        console.log("User is set:", req.user);
-    }
-
-    next();
-});
 
 // Attach routers below here
 const usersRouter = require('./users');
